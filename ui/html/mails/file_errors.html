@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+    <body>
+        <div>
+            <div>Hi Team,</div><br/>
+            <div>Directory : {{.FileDirectory}}</div>
+            {{ if or (ne .FileNotFound "") }}
+            <br/><div>Following files not found: </div>
+            <div>{{.FileNotFound}}</div>
+            {{ end }}
+            {{ if or (ne .FileSizeLess "") }}
+            <br/>
+            <div>Following files size are less than the threshold value  of {{.MinimumFileSize}}: </div>
+            <div>{{.FileSizeLess}}</div>
+            {{end}}
+            {{ if or (ne .FileInvalidInterval "") }}
+            <br/>
+            <div>Following files are created in wrong interval : </div>
+            <div>{{.FileInvalidInterval}}</div>
+            {{end}}
+        </div>
+    </body>
+</html>
