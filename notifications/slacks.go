@@ -10,9 +10,7 @@ import (
 )
 
 func SendSlackSuccessMessage(message string) {
-	successContext := map[string]string{"success": message}
-	successContextString := formatContext(successContext)
-	sendSlackMessage("Success", message, successContextString, "#008000")
+	sendSlackMessage("Success", message, "", "#008000")
 }
 
 func SendSlackErrorMessage(message string, errorContext map[string]string) {

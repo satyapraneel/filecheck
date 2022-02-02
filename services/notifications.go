@@ -24,9 +24,10 @@ func (app App) SendNotification(validatedFiles ValidateFileStruct) bool {
 			}
 		case "slack":
 			if validatedFiles.SendErrorNotification {
-				println("sending Slack notification")
+				println("Sending Error Slack notification")
 				app.SendSlackNotification(validatedFiles)
 			} else {
+				println("Sending Success Slack notification")
 				notifications.SendSlackSuccessMessage(successMessage)
 			}
 		default:

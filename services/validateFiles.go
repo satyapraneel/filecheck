@@ -47,7 +47,8 @@ func (app App) ValidateFiles() ValidateFileStruct {
 			fileSizeLessThanThreshold += fileName + " " + fileSize + "KB\n\n\n"
 			continue
 		}
-		if stats.ModTime().Unix() < endTime || stats.ModTime().Unix() > startTime {
+		//grater than endtime/smaller than start time window
+		if stats.ModTime().Unix() > endTime || stats.ModTime().Unix() < startTime {
 			sendNotification = true
 			createdAt := stats.ModTime().Format("2006-01-02 15:04:05")
 			fileInvalidInterval += fileName + " created_at:" + createdAt + "\n\n\n"
