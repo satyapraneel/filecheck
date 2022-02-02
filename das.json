@@ -14,7 +14,7 @@
     ],
     "schedule": [
         {
-            "time_to_run_on": "0 23 * * 1-5",
+            "cron_timing": "0 23 * * 1-5",
             "files_list": [
                 "productproperties_EG",
                 "productattributes_UAE",
@@ -38,7 +38,7 @@
             ]
         },
         {
-            "time_to_run_on": "* 23 * * 0,6",
+            "cron_timing": "* 23 * * 0,6",
             "files_list": [
                 "productproperties_EG",
                 "productattributes_UAE",
