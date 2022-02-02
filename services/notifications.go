@@ -7,22 +7,30 @@ import (
 )
 
 var erroMessage = "DA : Error in file generation"
+var successMessage = "DA: All file generation is success"
 
 func (app App) SendNotification(validatedFiles ValidateFileStruct) bool {
-	if validatedFiles.SendNotification {
-		//send notification
-		channels := app.DAStruct.NotificationType
-		for _, channel := range channels {
-			switch channel {
-			case "email":
-				println("sending email")
-				app.SendEmailNotification(validatedFiles)
-			case "slack":
+
+	//send notification
+	channels := app.DAStruct.NotificationType
+	for _, channel := range channels {
+		switch channel {
+		case "email":
+			println("sending email")
+			if validatedFiles.SendErrorNotification {
+				app.SendEmailNotification(validatedFiles, erroMessage, "file_errors.html")
+			} else {
+				app.SendEmailNotification(validatedFiles, successMessage, "file_success.html")
+			}
+		case "slack":
+			if validatedFiles.SendErrorNotification {
 				println("sending Slack notification")
 				app.SendSlackNotification(validatedFiles)
-			default:
-				println("no channels available to send the notifications")
+			} else {
+				notifications.SendSlackSuccessMessage(successMessage)
 			}
+		default:
+			println("no channels available to send the notifications")
 		}
 	}
 	return true
@@ -39,12 +47,13 @@ func (app App) SendSlackNotification(validatedFiles ValidateFileStruct) {
 	if validatedFiles.FileInvalidInterval != "" {
 		errorContext["invalid_interval"] = validatedFiles.FileInvalidInterval
 	}
-	notifications.SendSlackMessage(erroMessage, errorContext)
+	notifications.SendSlackErrorMessage(erroMessage, errorContext)
 }
 
-func (app App) SendEmailNotification(validatedFiles ValidateFileStruct) {
-	mail := notifications.NewMail(app.DAStruct.EmailTo, erroMessage, "", "")
-	mailTemplate := "/ui/html/mails/file_errors.html"
+func (app App) SendEmailNotification(validatedFiles ValidateFileStruct, message string, template string) {
+	mail := notifications.NewMail(app.DAStruct.EmailTo, message, "", "")
+	// mailTemplate := "/ui/html/mails/file_errors.html"
+	mailTemplate := "/ui/html/mails/" + template
 	errs := mail.ParseTemplate(mailTemplate, validatedFiles)
 	if errs != nil {
 		log.Printf("template parse : %v", errs)

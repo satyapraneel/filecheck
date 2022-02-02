@@ -9,25 +9,44 @@ import (
 	"github.com/slack-go/slack"
 )
 
-func SendSlackMessage(message string, errorContext map[string]string) {
-	errorContextString := formatErrorContext(errorContext)
-	p := config.GetSlackConfig()
+func SendSlackSuccessMessage(message string) {
+	successContext := map[string]string{"success": message}
+	successContextString := formatContext(successContext)
+	sendSlackMessage("Success", message, successContextString, "#008000")
+}
+
+func SendSlackErrorMessage(message string, errorContext map[string]string) {
+	errorContextString := formatContext(errorContext)
 	if errorContext["code"] != "" {
 		message = errorContext["code"] + " : " + message
 	}
+	sendSlackMessage("Error", message, errorContextString, "#FF2323")
+}
 
+func formatContext(context map[string]string) string {
+	contextString := ""
+
+	for key, value := range context {
+		contextString += fmt.Sprintf("\n%s: \n%s", key, strings.Replace(value, "\n", "\t", -1))
+	}
+	return contextString
+}
+
+func sendSlackMessage(title string, message string, context string, colorCode string) {
+
+	p := config.GetSlackConfig()
 	attachment := slack.Attachment{
-		Title:      "Error",
+		Title:      title,
 		Fallback:   message,
 		Text:       message,
-		Color:      "#FF2323",
+		Color:      colorCode,
 		MarkdownIn: []string{"fields"},
 		Footer:     "Powered By GO",
 		FooterIcon: "https://emojis.slackmojis.com/emojis/images/1454546974/291/golang.png",
 		Fields: []slack.AttachmentField{
 			{
 				Title: "Context",
-				Value: errorContextString,
+				Value: context,
 				Short: false,
 			},
 		},
@@ -43,14 +62,6 @@ func SendSlackMessage(message string, errorContext map[string]string) {
 
 	if err != nil {
 		log.Printf("ERROR Connecting to slack : %v", err)
-	}
-}
 
-func formatErrorContext(errorContext map[string]string) string {
-	errorContextString := ""
-
-	for key, value := range errorContext {
-		errorContextString += fmt.Sprintf("\n%s: \n%s", key, strings.Replace(value, "\n", "\t", -1))
 	}
-	return errorContextString
 }

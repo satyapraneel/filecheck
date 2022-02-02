@@ -7,6 +7,11 @@ import (
 )
 
 func main() {
+	schedule()
+}
+
+func schedule() {
+
 	if err := godotenv.Load("env.yaml"); err != nil {
 		panic(err)
 	}

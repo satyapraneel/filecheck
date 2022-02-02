@@ -11,12 +11,12 @@ import (
 )
 
 type ValidateFileStruct struct {
-	FileNotFound        string
-	FileDirectory       string
-	FileSizeLess        string
-	FileInvalidInterval string
-	MinimumFileSize     int
-	SendNotification    bool
+	FileNotFound          string
+	FileDirectory         string
+	FileSizeLess          string
+	FileInvalidInterval   string
+	MinimumFileSize       int
+	SendErrorNotification bool
 }
 
 func (app App) ValidateFiles() ValidateFileStruct {
@@ -55,12 +55,12 @@ func (app App) ValidateFiles() ValidateFileStruct {
 
 	}
 	return ValidateFileStruct{
-		FileNotFound:        fileNotFound,
-		FileSizeLess:        fileSizeLessThanThreshold,
-		FileInvalidInterval: fileInvalidInterval,
-		FileDirectory:       data.FolderPath,
-		MinimumFileSize:     int(data.MinFileSize / 1000),
-		SendNotification:    sendNotification,
+		FileNotFound:          fileNotFound,
+		FileSizeLess:          fileSizeLessThanThreshold,
+		FileInvalidInterval:   fileInvalidInterval,
+		FileDirectory:         data.FolderPath,
+		MinimumFileSize:       int(data.MinFileSize / 1000),
+		SendErrorNotification: sendNotification,
 	}
 }
 

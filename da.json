@@ -6,7 +6,7 @@
     "file_name_prefix":"landmark_",
     "date_format_for_file":"02012006",
     "file_extension": "csv",
-    "notification_type": ["email","slack"],
+    "notification_type": ["slack"],
     "email_to": ["satyapraneel@gmail.com"],
     "files_list": [
         "productproperties_EG",
