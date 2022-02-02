@@ -25,11 +25,12 @@ func (app App) ValidateFiles() ValidateFileStruct {
 	fileInvalidInterval := ""
 	sendNotification := false
 	data := app.DAConfig
-	dt := time.Now() //.AddDate(0, 0, -1)
-	dateFormat := dt.Format(data.DateFormatForFile)
-	startTime := getStartTime(data.StartTime)
-	endTime := getEndTime(data.EndTime)
-	for _, fileList := range data.FilesList {
+	filesLists := app.Scheduler
+	dt := time.Now()                                //.AddDate(0, 0, -1)
+	dateFormat := dt.Format(data.DateFormatForFile) //EX: 20022022
+	startTime := getStartTime(data.StartTime)       //Start time of file moving
+	endTime := getEndTime(data.EndTime)             //end time of file moving
+	for _, fileList := range filesLists.FilesList {
 		fileName := getFileName(data, fileList, dateFormat)
 		filePath := data.FolderPath + fileName
 		// CreateFile(filePath) //run this if we want to test it in local
@@ -41,13 +42,13 @@ func (app App) ValidateFiles() ValidateFileStruct {
 			continue
 		}
 		//check files minimum threshold
-		if stats.Size() < data.MinFileSize {
+		if int(stats.Size()/1000) < int(data.MinFileSize) {
 			sendNotification = true
 			fileSize := strconv.Itoa(int(stats.Size() / 1000))
 			fileSizeLessThanThreshold += fileName + " " + fileSize + "KB\n\n\n"
 			continue
 		}
-		//grater than endtime/smaller than start time window
+		//grater than endtime/smaller than start time window this case should happen
 		if stats.ModTime().Unix() > endTime || stats.ModTime().Unix() < startTime {
 			sendNotification = true
 			createdAt := stats.ModTime().Format("2006-01-02 15:04:05")
@@ -60,7 +61,7 @@ func (app App) ValidateFiles() ValidateFileStruct {
 		FileSizeLess:          fileSizeLessThanThreshold,
 		FileInvalidInterval:   fileInvalidInterval,
 		FileDirectory:         data.FolderPath,
-		MinimumFileSize:       int(data.MinFileSize / 1000),
+		MinimumFileSize:       int(data.MinFileSize),
 		SendErrorNotification: sendNotification,
 	}
 }
@@ -87,7 +88,7 @@ func parseTime(dt time.Time, scheduledTime string) int64 {
 }
 
 func getFileName(data config.DAConfig, fileList string, dateFormat string) string {
-	return data.FileNamePrefix + "_" +
+	return data.FileNamePrefix +
 		fileList + "_" + dateFormat +
 		"." + data.FileExtension
 }

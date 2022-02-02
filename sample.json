@@ -1,7 +1,7 @@
 {
     "start_time": "21:30:00",
     "end_time": "19:40:00",
-    "min_file_size_in_bytes": 10,
+    "min_file_size_in_kb": 10,
     "folder_path": "/Users/satyapraneelholla/Desktop/DA/",
     "file_name_prefix": "landmark_",
     "date_format_for_file": "02012006",
@@ -14,7 +14,7 @@
     ],
     "schedule": [
         {
-            "cron_timing": "0 23 * * 1-5",
+            "cron_timing": "30 3 * * 1-5",
             "files_list": [
                 "productproperties_EG",
                 "productattributes_UAE",
@@ -38,7 +38,7 @@
             ]
         },
         {
-            "cron_timing": "* 23 * * 0,6",
+            "cron_timing": "30 3 * * 6,0",
             "files_list": [
                 "productproperties_EG",
                 "productattributes_UAE",

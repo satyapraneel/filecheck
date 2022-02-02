@@ -7,7 +7,8 @@ import (
 )
 
 type App struct {
-	DAConfig config.DAConfig
+	DAConfig  config.DAConfig
+	Scheduler config.Scheduler
 }
 
 func GetConfigurationDetails() config.DAConfig {
@@ -16,7 +17,7 @@ func GetConfigurationDetails() config.DAConfig {
 	var data config.DAConfig
 	err := json.Unmarshal(jsonFile, &data)
 	if err != nil {
-		panic(path + " Json file not found")
+		panic(err)
 	}
 	return data
 }

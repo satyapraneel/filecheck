@@ -18,3 +18,6 @@
     iii. "notification_type" can be "email","slack" as an array of values
     
     iv. "email_to" can have multiple values as an array
+
+
+3.  If you make any changes to the json file then execution has to be stopped.
