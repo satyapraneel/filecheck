@@ -3,18 +3,17 @@ package services
 import (
 	"encoding/json"
 	"filecheck/config"
-	"filecheck/jsons"
 	"io/ioutil"
 )
 
 type App struct {
-	DAStruct jsons.DAStruct
+	DAConfig config.DAConfig
 }
 
-func GetConfigurationDetails() jsons.DAStruct {
+func GetConfigurationDetails() config.DAConfig {
 	path := config.GetFileConfig().JsonFilePath
 	jsonFile, _ := ioutil.ReadFile(path)
-	var data jsons.DAStruct
+	var data config.DAConfig
 	err := json.Unmarshal(jsonFile, &data)
 	if err != nil {
 		panic(path + " Json file not found")

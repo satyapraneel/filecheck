@@ -15,7 +15,7 @@ func schedule() {
 	if err := godotenv.Load("env.yaml"); err != nil {
 		panic(err)
 	}
-	services := &services.App{DAStruct: services.GetConfigurationDetails()}
+	services := &services.App{DAConfig: services.GetConfigurationDetails()}
 	validatedFiles := services.ValidateFiles()
 	services.SendNotification(validatedFiles)
 }

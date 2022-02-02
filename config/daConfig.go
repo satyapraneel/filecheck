@@ -1,7 +1,7 @@
-package jsons
+package config
 
 //da.json file mapper
-type DAStruct struct {
+type DAConfig struct {
 	StartTime         string   `json:"start_time"`             // 9:30PM (21:30)
 	EndTime           string   `json:"end_time"`               // 02:40 AM (02:40)
 	FolderPath        string   `json:"folder_path"`            // /home/lmsone/DynamicAction/output/archive/

@@ -5,7 +5,7 @@
 2. Create a json file and give the files name
     JSON_FILE_PATH="/var/www/html/filecheck/sample.json"
     Follow the da.json structure example file
-    Find more details in DAStruct.go file
+    Find more details in DAConfig.go file
     NOTE: Provide the absolute path
     
     

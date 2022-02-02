@@ -12,7 +12,7 @@ var successMessage = "DA: All file generation is success"
 func (app App) SendNotification(validatedFiles ValidateFileStruct) bool {
 
 	//send notification
-	channels := app.DAStruct.NotificationType
+	channels := app.DAConfig.NotificationType
 	for _, channel := range channels {
 		switch channel {
 		case "email":
@@ -52,7 +52,7 @@ func (app App) SendSlackNotification(validatedFiles ValidateFileStruct) {
 }
 
 func (app App) SendEmailNotification(validatedFiles ValidateFileStruct, message string, template string) {
-	mail := notifications.NewMail(app.DAStruct.EmailTo, message, "", "")
+	mail := notifications.NewMail(app.DAConfig.EmailTo, message, "", "")
 	// mailTemplate := "/ui/html/mails/file_errors.html"
 	mailTemplate := "/ui/html/mails/" + template
 	errs := mail.ParseTemplate(mailTemplate, validatedFiles)

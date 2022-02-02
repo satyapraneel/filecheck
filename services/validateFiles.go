@@ -1,7 +1,7 @@
 package services
 
 import (
-	"filecheck/jsons"
+	"filecheck/config"
 	"fmt"
 	"io/fs"
 	"io/ioutil"
@@ -24,7 +24,7 @@ func (app App) ValidateFiles() ValidateFileStruct {
 	fileNotFound := ""
 	fileInvalidInterval := ""
 	sendNotification := false
-	data := app.DAStruct
+	data := app.DAConfig
 	dt := time.Now() //.AddDate(0, 0, -1)
 	dateFormat := dt.Format(data.DateFormatForFile)
 	startTime := getStartTime(data.StartTime)
@@ -86,7 +86,7 @@ func parseTime(dt time.Time, scheduledTime string) int64 {
 	return t.Unix()
 }
 
-func getFileName(data jsons.DAStruct, fileList string, dateFormat string) string {
+func getFileName(data config.DAConfig, fileList string, dateFormat string) string {
 	return data.FileNamePrefix + "_" +
 		fileList + "_" + dateFormat +
 		"." + data.FileExtension
