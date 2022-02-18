@@ -1,5 +1,6 @@
 1. To set the path of the directory while running
     JSON_FILE_PATH="/var/www/html/filecheck/sample.json" go run main.go
+    For compiled version : JSON_FILE_PATH=/Users/satyapraneelholla/www/GO/filecheck/sample.json ./filecheck
     NOTE: Provide the absolute path
 
 2. Create a json file and give the files name
