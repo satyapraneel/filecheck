@@ -12,6 +12,8 @@ type DAConfig struct {
 	NotificationType  []string    `json:"notification_type"`    //[email, slack]
 	DateFormatForFile string      `json:"date_format_for_file"` //28012021
 	Schedule          []Scheduler `json:"schedule"`
+	EnvFile           string      `json:"env_file"`
+	RootPath          string      `json:"root_path"`
 }
 
 type Scheduler struct {

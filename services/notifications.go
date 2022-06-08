@@ -54,7 +54,7 @@ func (app App) SendSlackNotification(validatedFiles ValidateFileStruct) {
 func (app App) SendEmailNotification(validatedFiles ValidateFileStruct, message string, template string) {
 	mail := notifications.NewMail(app.DAConfig.EmailTo, message, "", "")
 	// mailTemplate := "/ui/html/mails/file_errors.html"
-	mailTemplate := "/ui/html/mails/" + template
+	mailTemplate := app.DAConfig.RootPath + "/ui/html/mails/" + template
 	errs := mail.ParseTemplate(mailTemplate, validatedFiles)
 	if errs != nil {
 		log.Printf("template parse : %v", errs)

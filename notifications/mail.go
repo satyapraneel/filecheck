@@ -3,9 +3,7 @@ package notifications
 import (
 	"bytes"
 	"html/template"
-	"log"
 	"net/smtp"
-	"os"
 	"strings"
 
 	"filecheck/config"
@@ -47,11 +45,7 @@ func (r *MailSettings) SendEmail() (bool, error) {
 }
 
 func (r *MailSettings) ParseTemplate(templateFileName string, data interface{}) error {
-	wd, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
-	}
-	t, err := template.ParseFiles(wd + templateFileName)
+	t, err := template.ParseFiles(templateFileName)
 	if err != nil {
 		return err
 	}

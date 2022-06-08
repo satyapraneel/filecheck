@@ -2,6 +2,7 @@ package main
 
 import (
 	"filecheck/services"
+	"os"
 
 	"github.com/joho/godotenv"
 )
@@ -12,7 +13,11 @@ func main() {
 
 func schedule() {
 
-	if err := godotenv.Load("env.yaml"); err != nil {
+	env := "env.yaml"
+	if len(os.Args) >= 2 {
+		env = os.Args[1]
+	}
+	if err := godotenv.Load(env); err != nil {
 		panic(err)
 	}
 	services := &services.App{DAConfig: services.GetConfigurationDetails()}

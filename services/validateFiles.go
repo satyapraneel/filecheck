@@ -33,7 +33,10 @@ func (app App) ValidateFiles() ValidateFileStruct {
 	for _, fileList := range filesLists.FilesList {
 		fileName := getFileName(data, fileList, dateFormat)
 		filePath := data.FolderPath + fileName
-		// CreateFile(filePath) //run this if we want to test it in local
+		// status := CreateFile(filePath) //run this if we want to test it in local
+		// if status {
+		// 	continue
+		// }
 		stats, error := fileExists(filePath)
 		//check file exists
 		if error != nil {
@@ -103,10 +106,11 @@ func fileExists(path string) (fs.FileInfo, error) {
 }
 
 //This method only used for testing, to create files
-func CreateFile(filePath string) {
+func CreateFile(filePath string) bool {
 	// to create files for testing uncomment the below code
 	err := ioutil.WriteFile(filePath, []byte("Hello world"), 0755)
 	if err != nil {
 		fmt.Printf("Unable to write file: %v", err)
 	}
+	return true
 }
